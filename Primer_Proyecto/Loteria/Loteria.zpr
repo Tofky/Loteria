@@ -18,7 +18,7 @@ current_source=main.cpp
 path_char=\
 [source]
 path=main.cpp
-cursor=162:9
+cursor=153:0
 open=true
 [config]
 name=Debug

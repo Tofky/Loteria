@@ -6,7 +6,7 @@
 	* El objetivo del programa es realizar un sorteo de forma aleatoria y determinar los premios ganados 
 	  por cada participante en función del número generado. También se encarga de actualizar el monto acumulado 
 	  de la lotería y la cantidad de bolas restantes para futuros sorteos.
-	* Version 1.4
+	* Version 1.5
 	* 4/2023
 
 */
@@ -16,6 +16,7 @@
 #include <random>
 #include <iomanip>
 #include <windows.h>
+#include <cctype>
 
 // Genera un numero aleatorio hasta el numero maximo indicado siendo este inclusivo
 int sortee_premio(int maxNum){ 
@@ -74,7 +75,7 @@ int premios_disponibles(int i,int premio_0,int premio_1,int premio_2,int premio_
 	}return premiosRestantes;
 }
 // Brinda el monto del acumulado, en base al numero de sorteo 
-int monto_acumulado(int numeroSorteo){ // Brinda el monto del acumulado, en base al numero de sorteo 
+int monto_acumulado(int numeroSorteo){ 
 	int montoAcumulado = 0;
 	if(numeroSorteo >= 1 && numeroSorteo < 11){
 		montoAcumulado = 20;
@@ -91,7 +92,8 @@ int bolas_extra(int premiosTotales,int premio_0,int premio_1,int premio_2,int pr
 	}
 	return bolas_totales;
 }
-std::string seleccionar_premio(int numeroPremio,std::string tipo){//Entrega el tipo de premio ganador, Se entrega en formato de tabla "T" o simpleficado "S"
+//Entrega el tipo de premio ganador, Se entrega en formato de tabla "T" o simpleficado "S"
+std::string seleccionar_premio(int numeroPremio,std::string tipo){
 	std::string premio;
 	switch(numeroPremio){
 	case 0:
@@ -149,8 +151,8 @@ std::string seleccionar_premio(int numeroPremio,std::string tipo){//Entrega el t
 	}
 	return premio;
 }
-	// Brinda una actualización de datos donde: 1.cantidad de bolitas de Acumulado, 2.cantidad de premios disponibles de cada monto,
-	// 3.monto Acumulado 4.cantidad de bolitas de Premio Extra.
+// Brinda una actualización de datos donde: 1.cantidad de bolitas de Acumulado, 2.cantidad de premios disponibles de cada monto,
+// 3.monto Acumulado 4.cantidad de bolitas de Premio Extra.
 int actualiza_acumulado(int premiosTotales,int opcion,int numeroSorteo,int numeroPremio,int premio_0,int premio_1,int premio_2,int premio_3,int premio_4,int premio_5,int premio_6){
 	int valor;
 	switch(opcion){
@@ -279,6 +281,11 @@ int main (int argc, char *argv[]) {
 				std::cout << " Digite < 2 > para terminar" << std::endl;	
 				std::cout << "Opcion: ";
 				std::cin >> opcion;
+				if (std::cin.fail()){
+					std::cout << "Entrada no válida. Ingrese un número.\n";
+					std::cin.clear(); // Restaura el estado del flujo de entrada
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora el resto de la línea
+				}
 			}while(opcion != 1 && opcion != 2);
 		}else if (numeroSorteo >  20 || opcion == 2){
 			break;
